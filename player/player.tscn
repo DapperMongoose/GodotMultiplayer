@@ -1,7 +1,8 @@
-[gd_scene load_steps=70 format=3 uid="uid://detbov4xu11s1"]
+[gd_scene load_steps=71 format=3 uid="uid://detbov4xu11s1"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6dn3r"]
 [ext_resource type="Texture2D" uid="uid://cln1ubxiy43oh" path="res://art/characters/elf/double_jump_start/0_Dark_Elves_Double Jump_000.png" id="1_68cvu"]
+[ext_resource type="PackedScene" uid="uid://ci2juxm7o6ylr" path="res://player/player_camera.tscn" id="2_etey6"]
 [ext_resource type="Texture2D" uid="uid://n7mnms3u3wjr" path="res://art/characters/elf/double_jump_start/0_Dark_Elves_Double Jump_001.png" id="2_y7sxp"]
 [ext_resource type="Texture2D" uid="uid://k2rlkgmf0qqf" path="res://art/characters/elf/double_jump_start/0_Dark_Elves_Double Jump_002.png" id="3_ek1bl"]
 [ext_resource type="Texture2D" uid="uid://cxmvprctwqect" path="res://art/characters/elf/double_jump_start/0_Dark_Elves_Double Jump_003.png" id="4_vdwou"]
@@ -305,6 +306,7 @@ animations = [{
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite")]
 script = ExtResource("1_6dn3r")
 player_sprite = NodePath("AnimatedSprite2D")
+player_camera = ExtResource("2_etey6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -28)
@@ -316,5 +318,3 @@ scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_opxwf")
 animation = &"double_jump_start"
 autoplay = "idle"
-
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
