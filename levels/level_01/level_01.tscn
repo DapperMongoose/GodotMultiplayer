@@ -1,12 +1,12 @@
 [gd_scene load_steps=7 format=3 uid="uid://c8b2id37ne7cb"]
 
-[ext_resource type="Texture2D" uid="uid://chwbcf7n2ajtp" path="res://art/platforms/Platformer_spritesheet.png" id="1_jp66i"]
-[ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="2_4bkkd"]
-[ext_resource type="PackedScene" uid="uid://detbov4xu11s1" path="res://player/player.tscn" id="2_l8eqv"]
-[ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="3_djv7e"]
+[ext_resource type="Texture2D" uid="uid://chwbcf7n2ajtp" path="res://art/platforms/Platformer_spritesheet.png" id="1_bxmrc"]
+[ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="2_1ton0"]
+[ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="3_t5k8h"]
+[ext_resource type="PackedScene" uid="uid://detbov4xu11s1" path="res://player/player.tscn" id="4_4wjg4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x7jts"]
-texture = ExtResource("1_jp66i")
+texture = ExtResource("1_bxmrc")
 texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -87,7 +87,7 @@ motion_scale = Vector2(0.25, 1)
 motion_mirroring = Vector2(1334, 0)
 
 [node name="BackgroundTrees" type="Sprite2D" parent="Environment/ParallaxBackground/ParallaxTrees"]
-texture = ExtResource("2_4bkkd")
+texture = ExtResource("2_1ton0")
 centered = false
 
 [node name="ParallaxHouses" type="ParallaxLayer" parent="Environment/ParallaxBackground"]
@@ -95,11 +95,11 @@ motion_scale = Vector2(0.5, 1)
 motion_mirroring = Vector2(1334, 0)
 
 [node name="BackgroundHouses" type="Sprite2D" parent="Environment/ParallaxBackground/ParallaxHouses"]
-texture = ExtResource("3_djv7e")
+texture = ExtResource("3_t5k8h")
 centered = false
 
 [node name="Players" type="Node" parent="."]
 
-[node name="Player" parent="Players" instance=ExtResource("2_l8eqv")]
+[node name="Player" parent="Players" instance=ExtResource("4_4wjg4")]
 position = Vector2(562, 128)
 max_jumps = 3

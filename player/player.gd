@@ -36,7 +36,6 @@ func _physics_process(_delta: float) -> void:
 	
 	face_movement_direction(horizontal_input)
 
-
 func _on_animated_sprite_2d_animation_finished() -> void:
 	player_sprite.play("jump")
 
