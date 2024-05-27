@@ -1,11 +1,28 @@
 extends RigidBody2D
 
+class_name PushableObject
 
-# Called when the node enters the scene tree for the first time.
+var requested_authority = false
+
 func _ready() -> void:
-	pass # Replace with function body.
+	if !multiplayer.is_server():
+		freeze = true
 
+func push(impulse, point):
+	if is_multiplayer_authority():
+		apply_impulse(impulse, point)
+	else:
+		if !requested_authority:
+			requested_authority = true
+			request_authority.rpc_id(get_multiplayer_authority(), multiplayer.get_unique_id())
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+@rpc("any_peer", "call_remote", "reliable")
+func request_authority(id):
+	set_pushable_owner.rpc(id)
+
+@rpc("authority", "call_local", "reliable")
+func set_pushable_owner(id):
+	requested_authority = false
+	set_multiplayer_authority(id)
+	freeze = multiplayer.get_unique_id() != id
+	

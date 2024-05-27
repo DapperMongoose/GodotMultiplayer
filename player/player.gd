@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var gravity = 30
 @export var jump_strength = 600
 @export var max_jumps = 1
+@export var push_force = 10
 
 
 @onready var initial_sprite_scale = player_sprite.scale
@@ -61,6 +62,13 @@ func _physics_process(_delta: float) -> void:
 	handle_movement_state()
 	
 	move_and_slide()
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var pushable = collision.get_collider() as PushableObject
+		if pushable == null:
+			continue
+		pushable.push(-collision.get_normal() * push_force, collision.get_position())
 	
 	face_movement_direction(horizontal_input)
 

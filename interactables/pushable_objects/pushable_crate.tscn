@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://w6uuo4a0x407"]
+[gd_scene load_steps=6 format=3 uid="uid://w6uuo4a0x407"]
 
+[ext_resource type="Script" path="res://interactables/pushable_objects/pushable_object.gd" id="1_4geft"]
 [ext_resource type="Texture2D" uid="uid://rglygid7fsot" path="res://art/objects/Wooden_Crate.png" id="1_t4qap"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mxxna"]
@@ -21,6 +22,7 @@ properties/1/replication_mode = 1
 collision_layer = 16
 collision_mask = 19
 physics_material_override = SubResource("PhysicsMaterial_mxxna")
+script = ExtResource("1_4geft")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
