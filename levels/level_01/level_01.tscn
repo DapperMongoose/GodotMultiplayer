@@ -113,7 +113,7 @@ spawn_path = NodePath("../PlayersContainer")
 spawn_limit = 2
 
 [node name="SpawnPoint_0" type="Node2D" parent="Players"]
-position = Vector2(481, 123)
+position = Vector2(685, 109)
 
 [node name="SpawnPoint_1" type="Node2D" parent="Players"]
-position = Vector2(647, 123)
+position = Vector2(811, 109)
