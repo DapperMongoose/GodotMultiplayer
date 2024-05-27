@@ -107,7 +107,7 @@ centered = false
 
 [node name="Interactables" type="Node" parent="."]
 
-[node name="PressurePlate" parent="Interactables" instance=ExtResource("6_2ngxx")]
+[node name="DoorPlate" parent="Interactables" instance=ExtResource("6_2ngxx")]
 position = Vector2(33, 126)
 
 [node name="Door" parent="Interactables" instance=ExtResource("7_iljrn")]
@@ -127,3 +127,5 @@ position = Vector2(685, 109)
 
 [node name="SpawnPoint_1" type="Node2D" parent="Players"]
 position = Vector2(811, 109)
+
+[connection signal="toggle" from="Interactables/DoorPlate" to="Interactables/Door" method="activate"]
