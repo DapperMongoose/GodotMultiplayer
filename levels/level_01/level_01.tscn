@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8b2id37ne7cb"]
+[gd_scene load_steps=10 format=3 uid="uid://c8b2id37ne7cb"]
 
 [ext_resource type="Texture2D" uid="uid://chwbcf7n2ajtp" path="res://art/platforms/Platformer_spritesheet.png" id="1_bxmrc"]
 [ext_resource type="Script" path="res://levels/level.gd" id="1_tmmau"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="3_t5k8h"]
 [ext_resource type="PackedScene" uid="uid://detbov4xu11s1" path="res://player/player.tscn" id="4_4wjg4"]
 [ext_resource type="PackedScene" uid="uid://dlcgi5mfo8hiq" path="res://interactables/pressure_plate/pressure_plate.tscn" id="6_2ngxx"]
+[ext_resource type="PackedScene" uid="uid://iwrsvnqs0f7l" path="res://interactables/door/door.tscn" id="7_iljrn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x7jts"]
 texture = ExtResource("1_bxmrc")
@@ -108,6 +109,9 @@ centered = false
 
 [node name="PressurePlate" parent="Interactables" instance=ExtResource("6_2ngxx")]
 position = Vector2(33, 126)
+
+[node name="Door" parent="Interactables" instance=ExtResource("7_iljrn")]
+position = Vector2(-108, 130)
 
 [node name="Players" type="Node" parent="."]
 
