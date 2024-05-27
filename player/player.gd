@@ -16,6 +16,7 @@ var jump_count = 0
 var camera_instance
 var owner_id = 1
 var state = PlayerState.IDLE
+var current_interactable
 
 enum PlayerState {
 	IDLE,
@@ -52,6 +53,10 @@ func _physics_process(_delta: float) -> void:
 		
 	velocity.x = horizontal_input * movement_speed
 	velocity.y += gravity
+	
+	if Input.is_action_just_pressed("interact"):
+		if current_interactable != null:
+			current_interactable.interact.rpc_id(1)
 	
 	handle_movement_state()
 	
@@ -120,3 +125,12 @@ func handle_movement_state():
 	# Jump Cancelling
 	if Input.is_action_just_released("jump") and velocity.y < 0.0:
 		velocity.y = 0.0
+
+
+func _on_interaction_handler_area_entered(area: Area2D) -> void:
+	current_interactable = area
+
+
+func _on_interaction_handler_area_exited(area: Area2D) -> void:
+	if current_interactable == area:
+		current_interactable = null

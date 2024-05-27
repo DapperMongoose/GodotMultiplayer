@@ -4,9 +4,6 @@ extends Node2D
 @export var chest_unlocked: Sprite2D
 @export var is_locked = true
 
-func _on_test_interact(state):
-	if state:
-		_on_interactable_interacted()
 
 func set_chest_properties():
 	chest_locked.visible = is_locked

@@ -135,4 +135,3 @@ position = Vector2(685, 109)
 position = Vector2(811, 109)
 
 [connection signal="toggle" from="Interactables/DoorPlate" to="Interactables/Door" method="activate"]
-[connection signal="toggle" from="Interactables/DoorPlate" to="Interactables/Chest" method="_on_test_interact"]
