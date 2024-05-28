@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://c8b2id37ne7cb"]
+[gd_scene load_steps=15 format=3 uid="uid://c8b2id37ne7cb"]
 
 [ext_resource type="Texture2D" uid="uid://chwbcf7n2ajtp" path="res://art/platforms/Platformer_spritesheet.png" id="1_bxmrc"]
 [ext_resource type="Script" path="res://levels/level.gd" id="1_tmmau"]
+[ext_resource type="PackedScene" uid="uid://5hfupdb11fwv" path="res://player/elf/elf.tscn" id="2_1n4ke"]
 [ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="2_1ton0"]
+[ext_resource type="PackedScene" uid="uid://dpcck1t3fw78d" path="res://player/knight/knight.tscn" id="3_rjw4e"]
 [ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="3_t5k8h"]
-[ext_resource type="PackedScene" uid="uid://detbov4xu11s1" path="res://player/player.tscn" id="4_4wjg4"]
 [ext_resource type="PackedScene" uid="uid://dlcgi5mfo8hiq" path="res://interactables/pressure_plate/pressure_plate.tscn" id="6_2ngxx"]
 [ext_resource type="PackedScene" uid="uid://iwrsvnqs0f7l" path="res://interactables/door/door.tscn" id="7_iljrn"]
 [ext_resource type="PackedScene" uid="uid://bpeaft8nfsxf2" path="res://interactables/chest/chest.tscn" id="8_t7v04"]
@@ -77,7 +78,7 @@ sources/0 = SubResource("TileSetAtlasSource_x7jts")
 [node name="Level_01" type="Node2D" node_paths=PackedStringArray("players_container", "spawn_points")]
 script = ExtResource("1_tmmau")
 players_container = NodePath("Players/PlayersContainer")
-player_scene = ExtResource("4_4wjg4")
+player_scenes = Array[PackedScene]([ExtResource("2_1n4ke"), ExtResource("3_rjw4e")])
 spawn_points = [NodePath("Players/SpawnPoint_0"), NodePath("Players/SpawnPoint_1")]
 
 [node name="Environment" type="Node" parent="."]
@@ -141,7 +142,7 @@ position = Vector2(980, -161)
 [node name="PlayersContainer" type="Node2D" parent="Players"]
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="Players"]
-_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+_spawnable_scenes = PackedStringArray("res://player/elf/elf.tscn", "res://player/knight/knight.tscn")
 spawn_path = NodePath("../PlayersContainer")
 spawn_limit = 2
 

@@ -1,10 +1,11 @@
 extends Node2D
 
 @export var players_container: Node2D
-@export var player_scene: PackedScene
+@export var player_scenes: Array[PackedScene]
 @export var spawn_points: Array[Node2D]
 
 var next_spawn_point_index = 0
+var next_character_index = 0
 
 func _ready():
 	if not multiplayer.is_server():
@@ -25,7 +26,7 @@ func _exit_tree():
 	multiplayer.peer_connected.disconnect(delete_player)
 
 func add_player(id):
-	var player_instance = player_scene.instantiate()
+	var player_instance = get_next_character()
 	player_instance.global_position = get_spawn_point()
 	player_instance.name = str(id)
 	players_container.add_child(player_instance)
@@ -40,3 +41,8 @@ func get_spawn_point():
 	var spawn_point = spawn_points[next_spawn_point_index].global_position
 	next_spawn_point_index = wrapi(next_spawn_point_index + 1, 0, len(spawn_points))
 	return spawn_point
+
+func get_next_character():
+	var character = player_scenes[next_character_index].instantiate()
+	next_character_index = wrapi(next_character_index +1, 0, len(player_scenes))
+	return character
