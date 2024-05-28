@@ -3,11 +3,15 @@ extends CharacterBody2D
 @export var player_sprite: AnimatedSprite2D
 @export var player_camera: PackedScene
 @export var camera_height = -132
+@export var player_finder: Node2D
 
 @export var movement_speed = 300
 @export var gravity = 30
 @export var jump_strength = 600
 @export var max_jumps = 1
+@export var push_force = 10
+@export var target_position: Vector2 = Vector2.INF
+
 
 
 @onready var initial_sprite_scale = player_sprite.scale
@@ -16,6 +20,7 @@ var jump_count = 0
 var camera_instance
 var owner_id = 1
 var state = PlayerState.IDLE
+var current_interactable
 
 enum PlayerState {
 	IDLE,
@@ -34,10 +39,14 @@ func _enter_tree():
 		
 	set_up_camera()
 	
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	if multiplayer.multiplayer_peer == null:
 		return
 	if owner_id != multiplayer.get_unique_id():
+		global_position = HelperFunctions.ClientInterpolate(
+			global_position, 
+			target_position,
+			delta)
 		return
 	update_camera_pos()
 
@@ -53,9 +62,22 @@ func _physics_process(_delta: float) -> void:
 	velocity.x = horizontal_input * movement_speed
 	velocity.y += gravity
 	
+	if Input.is_action_just_pressed("interact"):
+		if current_interactable != null:
+			current_interactable.interact.rpc_id(1)
+	
 	handle_movement_state()
 	
 	move_and_slide()
+	target_position = global_position
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var pushable = collision.get_collider() as PushableObject
+		if pushable == null:
+			continue
+		var point = collision.get_position() - pushable.global_position
+		pushable.push(-collision.get_normal() * push_force, point)
 	
 	face_movement_direction(horizontal_input)
 
@@ -66,7 +88,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 func set_up_camera():
 	camera_instance = player_camera.instantiate()
 	camera_instance.global_position.y = camera_height
-	get_tree().current_scene.add_child.call_deferred(camera_instance)
+	get_parent().add_child.call_deferred(camera_instance)
 
 func update_camera_pos():
 	camera_instance.global_position.x = global_position.x
@@ -120,3 +142,20 @@ func handle_movement_state():
 	# Jump Cancelling
 	if Input.is_action_just_released("jump") and velocity.y < 0.0:
 		velocity.y = 0.0
+
+
+func _on_interaction_handler_area_entered(area: Area2D) -> void:
+	current_interactable = area
+
+
+func _on_interaction_handler_area_exited(area: Area2D) -> void:
+	if current_interactable == area:
+		current_interactable = null
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	player_finder.visible = false
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	player_finder.visible = true
