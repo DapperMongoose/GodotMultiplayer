@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4v2pb7q2mkms"]
+[gd_scene load_steps=8 format=3 uid="uid://c4v2pb7q2mkms"]
 
 [ext_resource type="Script" path="res://interactables/key_door/key_door.gd" id="1_e4llp"]
 [ext_resource type="Texture2D" uid="uid://bg27k5sblx533" path="res://art/objects/Door_01.png" id="1_kogji"]
@@ -12,15 +12,19 @@ gradient = SubResource("Gradient_g6vvp")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ww4p6"]
 size = Vector2(116, 143.04)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q267s"]
+size = Vector2(68, 131.04)
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_e0wk6"]
 properties/0/path = NodePath(".:is_open")
 properties/0/spawn = true
 properties/0/replication_mode = 2
 
-[node name="KeyDoor" type="Node2D" node_paths=PackedStringArray("door_open", "door_closed")]
+[node name="KeyDoor" type="Node2D" node_paths=PackedStringArray("door_open", "door_closed", "exit_area")]
 script = ExtResource("1_e4llp")
 door_open = NodePath("DoorOpen")
 door_closed = NodePath("DoorClosed")
+exit_area = NodePath("ExitArea")
 
 [node name="DoorClosed" type="Sprite2D" parent="."]
 z_index = -100
@@ -44,8 +48,18 @@ collision_mask = 8
 position = Vector2(0, -70.48)
 shape = SubResource("RectangleShape2D_ww4p6")
 
+[node name="ExitArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea"]
+position = Vector2(0, -64.48)
+shape = SubResource("RectangleShape2D_q267s")
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_e0wk6")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="ExitArea" to="." method="_on_exit_area_body_entered"]
 [connection signal="delta_synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_delta_synchronized"]

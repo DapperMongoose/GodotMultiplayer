@@ -1,11 +1,15 @@
 extends Node2D
 
+class_name KeyDoor
+
+signal all_players_finished
+
 @export var is_open = false
 @export var door_open: Sprite2D
 @export var door_closed: Sprite2D
+@export var exit_area: Area2D
 
-
-
+var finished_players = 0
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if !multiplayer.is_server():
@@ -15,6 +19,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		return
 	is_open = true
 	area.get_owner().queue_free()
+	exit_area.monitoring = true
 	set_door_properties()
 
 func set_door_properties():
@@ -24,3 +29,10 @@ func set_door_properties():
 
 func _on_multiplayer_synchronizer_delta_synchronized() -> void:
 	set_door_properties()
+
+
+func _on_exit_area_body_entered(body: Node2D) -> void:
+	finished_players += 1
+	body.queue_free()
+	if finished_players > len(multiplayer.get_peers()):
+		all_players_finished.emit()

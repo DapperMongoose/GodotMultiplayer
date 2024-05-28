@@ -75,11 +75,12 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_x7jts")
 
-[node name="Level_01" type="Node2D" node_paths=PackedStringArray("players_container", "spawn_points")]
+[node name="Level_01" type="Node2D" node_paths=PackedStringArray("players_container", "spawn_points", "key_door")]
 script = ExtResource("1_tmmau")
 players_container = NodePath("Players/PlayersContainer")
 player_scenes = Array[PackedScene]([ExtResource("2_1n4ke"), ExtResource("3_rjw4e")])
 spawn_points = [NodePath("Players/SpawnPoint_0"), NodePath("Players/SpawnPoint_1")]
+key_door = NodePath("Interactables/KeyDoor")
 
 [node name="Environment" type="Node" parent="."]
 
@@ -123,7 +124,7 @@ rotation = -3.14159
 scale = Vector2(1, -1)
 
 [node name="KeyDoor" parent="Interactables" instance=ExtResource("9_he638")]
-position = Vector2(2515, -190)
+position = Vector2(2526, -193)
 
 [node name="BridgePlate1" parent="Interactables" instance=ExtResource("6_2ngxx")]
 position = Vector2(1386, -197)

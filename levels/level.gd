@@ -1,8 +1,11 @@
 extends Node2D
 
+signal level_complete
+
 @export var players_container: Node2D
 @export var player_scenes: Array[PackedScene]
 @export var spawn_points: Array[Node2D]
+@export var key_door: KeyDoor
 
 var next_spawn_point_index = 0
 var next_character_index = 0
@@ -17,6 +20,8 @@ func _ready():
 		add_player(id)
 		
 	add_player(1)
+	
+	key_door.all_players_finished.connect(_on_all_players_finished)
 
 func _exit_tree():
 	if multiplayer.multiplayer_peer == null:
@@ -46,3 +51,7 @@ func get_next_character():
 	var character = player_scenes[next_character_index].instantiate()
 	next_character_index = wrapi(next_character_index +1, 0, len(player_scenes))
 	return character
+
+func _on_all_players_finished():
+	level_complete.emit()
+	key_door.all_players_finished.disconnect(_on_all_players_finished)
