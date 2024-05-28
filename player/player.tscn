@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://detbov4xu11s1"]
+[gd_scene load_steps=74 format=3 uid="uid://detbov4xu11s1"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_6dn3r"]
 [ext_resource type="Texture2D" uid="uid://cln1ubxiy43oh" path="res://art/characters/elf/double_jump_start/0_Dark_Elves_Double Jump_000.png" id="1_68cvu"]
@@ -68,6 +68,7 @@
 [ext_resource type="Texture2D" uid="uid://bbthkjqiq33il" path="res://art/characters/elf/walk/0_Dark_Elves_Walking_021.png" id="64_wir3v"]
 [ext_resource type="Texture2D" uid="uid://b771rxse6n114" path="res://art/characters/elf/walk/0_Dark_Elves_Walking_022.png" id="65_ts771"]
 [ext_resource type="Texture2D" uid="uid://c2r31n6lj0pks" path="res://art/characters/elf/walk/0_Dark_Elves_Walking_023.png" id="66_4vb2a"]
+[ext_resource type="PackedScene" uid="uid://7804gbvcrs0n" path="res://player/player_finder.tscn" id="69_vro5t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iy8t2"]
 size = Vector2(40, 56)
@@ -317,12 +318,13 @@ properties/2/path = NodePath("AnimatedSprite2D:scale")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_finder")]
 collision_layer = 2
 collision_mask = 19
 script = ExtResource("1_6dn3r")
 player_sprite = NodePath("AnimatedSprite2D")
 player_camera = ExtResource("2_etey6")
+player_finder = NodePath("PlayerFinder")
 max_jumps = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -347,5 +349,13 @@ shape = SubResource("RectangleShape2D_hiryd")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_mobbg")
 
+[node name="PlayerFinder" parent="." instance=ExtResource("69_vro5t")]
+visible = false
+position = Vector2(0, -26)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="area_entered" from="AnimatedSprite2D/InteractionHandler" to="." method="_on_interaction_handler_area_entered"]
 [connection signal="area_exited" from="AnimatedSprite2D/InteractionHandler" to="." method="_on_interaction_handler_area_exited"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
